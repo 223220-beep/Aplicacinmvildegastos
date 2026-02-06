@@ -149,161 +149,143 @@ export default function ExpenseDetailScreen({
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col">
       {/* Header */}
-      <div className="bg-white border-b px-4 py-4">
-        <div className="flex items-center justify-between">
+      <div className="border-b px-6 py-6">
+        <div className="flex items-center">
           <button
             onClick={() => onNavigate('expenses-list')}
-            className="flex items-center text-gray-600 hover:text-gray-900"
+            className="text-gray-500 hover:text-gray-900 transition-colors"
           >
-            <ArrowLeft className="w-5 h-5 mr-2" />
-            Volver
+            <ArrowLeft className="w-5 h-5" strokeWidth={1.5} />
           </button>
-          <h1 className="text-xl font-bold text-gray-900">Detalle del Gasto</h1>
-          <div className="w-20"></div>
+          <h1 className="flex-1 text-center text-lg font-light text-gray-900">Detalle</h1>
+          <div className="w-5"></div>
         </div>
       </div>
 
       {/* Content */}
-      <div className="flex-1 px-6 py-6">
+      <div className="flex-1 px-6 py-8">
         {!isEditing ? (
           /* View Mode */
-          <div className="space-y-6">
-            <div className="bg-white p-6 rounded-lg shadow-sm border space-y-6">
-              <div className="flex items-center justify-between pb-4 border-b">
-                <h2 className="text-2xl font-bold text-gray-900">{expense.description}</h2>
+          <div className="space-y-8 max-w-sm mx-auto">
+            <div className="space-y-6">
+              <div>
+                <p className="text-xs text-gray-400 mb-2 uppercase tracking-wide">Descripción</p>
+                <p className="text-xl font-light text-gray-900">{expense.description}</p>
               </div>
 
-              <div className="space-y-4">
-                <div>
-                  <p className="text-sm text-gray-500 mb-1">Monto</p>
-                  <p className="text-3xl font-bold text-gray-900">
-                    {formatCurrency(expense.amount)}
-                  </p>
-                </div>
+              <div>
+                <p className="text-xs text-gray-400 mb-2 uppercase tracking-wide">Monto</p>
+                <p className="text-3xl font-light text-gray-900">
+                  {formatCurrency(expense.amount)}
+                </p>
+              </div>
 
-                <div>
-                  <p className="text-sm text-gray-500 mb-2">Categoría</p>
-                  <span className={`inline-block px-4 py-2 rounded-lg font-medium border ${getCategoryColor(expense.category)}`}>
-                    {expense.category}
-                  </span>
-                </div>
+              <div>
+                <p className="text-xs text-gray-400 mb-2 uppercase tracking-wide">Categoría</p>
+                <p className="text-base font-normal text-gray-600">{expense.category}</p>
+              </div>
 
-                <div>
-                  <p className="text-sm text-gray-500 mb-1">Fecha</p>
-                  <p className="text-lg text-gray-900">{formatDate(expense.date)}</p>
-                </div>
+              <div>
+                <p className="text-xs text-gray-400 mb-2 uppercase tracking-wide">Fecha</p>
+                <p className="text-base font-normal text-gray-600">{formatDate(expense.date)}</p>
               </div>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-3 pt-4">
               <Button
                 onClick={() => setIsEditing(true)}
-                className="w-full bg-blue-600 hover:bg-blue-700 py-6 text-lg"
+                className="w-full bg-gray-900 hover:bg-gray-800 py-6 font-normal"
               >
-                <Edit2 className="w-5 h-5 mr-2" />
-                Editar Gasto
+                Editar
               </Button>
 
               <Button
                 onClick={() => setShowDeleteDialog(true)}
                 variant="outline"
-                className="w-full border-red-200 text-red-600 hover:bg-red-50 py-6 text-lg"
+                className="w-full border-gray-200 text-red-600 hover:bg-red-50 hover:border-red-200 py-6 font-normal"
               >
-                <Trash2 className="w-5 h-5 mr-2" />
-                Eliminar Gasto
+                Eliminar
               </Button>
             </div>
           </div>
         ) : (
           /* Edit Mode */
-          <form onSubmit={handleUpdate} className="space-y-6 bg-white p-6 rounded-lg shadow-sm border">
+          <form onSubmit={handleUpdate} className="space-y-6 max-w-sm mx-auto">
             <div className="space-y-2">
-              <Label htmlFor="description">Descripción</Label>
-              <div className="relative">
-                <FileText className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <Input
-                  id="description"
-                  type="text"
-                  placeholder="ej. Comida en restaurante"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  className="pl-10"
-                  disabled={loading}
-                />
-              </div>
+              <Label htmlFor="description" className="text-sm font-normal text-gray-700">Descripción</Label>
+              <Input
+                id="description"
+                type="text"
+                placeholder="ej. Comida en restaurante"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="border-gray-200 focus:border-gray-900"
+                disabled={loading}
+              />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="amount">Monto</Label>
-              <div className="relative">
-                <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <Input
-                  id="amount"
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  placeholder="0.00"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                  className="pl-10"
-                  disabled={loading}
-                />
-              </div>
+              <Label htmlFor="amount" className="text-sm font-normal text-gray-700">Monto</Label>
+              <Input
+                id="amount"
+                type="number"
+                step="0.01"
+                min="0"
+                placeholder="0.00"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                className="border-gray-200 focus:border-gray-900"
+                disabled={loading}
+              />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="category">Categoría</Label>
-              <div className="relative">
-                <Tag className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
-                <Select
-                  value={category}
-                  onValueChange={setCategory}
-                  disabled={loading}
-                >
-                  <SelectTrigger id="category" className="pl-10">
-                    <SelectValue placeholder="Selecciona una categoría" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.map((cat) => (
-                      <SelectItem key={cat} value={cat}>
-                        {cat}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              <Label htmlFor="category" className="text-sm font-normal text-gray-700">Categoría</Label>
+              <Select
+                value={category}
+                onValueChange={setCategory}
+                disabled={loading}
+              >
+                <SelectTrigger id="category" className="border-gray-200">
+                  <SelectValue placeholder="Selecciona una categoría" />
+                </SelectTrigger>
+                <SelectContent>
+                  {categories.map((cat) => (
+                    <SelectItem key={cat} value={cat}>
+                      {cat}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="date">Fecha</Label>
-              <div className="relative">
-                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <Input
-                  id="date"
-                  type="date"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  className="pl-10"
-                  disabled={loading}
-                />
-              </div>
+              <Label htmlFor="date" className="text-sm font-normal text-gray-700">Fecha</Label>
+              <Input
+                id="date"
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                className="border-gray-200 focus:border-gray-900"
+                disabled={loading}
+              />
             </div>
 
             <div className="pt-4 space-y-3">
               <Button
                 type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 py-6"
+                className="w-full bg-gray-900 hover:bg-gray-800 py-6 font-normal"
                 disabled={loading}
               >
-                {loading ? 'Guardando...' : 'Guardar Cambios'}
+                {loading ? 'Guardando...' : 'Guardar'}
               </Button>
 
               <Button
                 type="button"
                 variant="outline"
-                className="w-full"
+                className="w-full border-gray-200 font-normal"
                 onClick={() => setIsEditing(false)}
                 disabled={loading}
               >
@@ -318,16 +300,16 @@ export default function ExpenseDetailScreen({
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
-            <AlertDialogDescription>
-              Esta acción no se puede deshacer. El gasto será eliminado permanentemente.
+            <AlertDialogTitle className="font-light">¿Eliminar gasto?</AlertDialogTitle>
+            <AlertDialogDescription className="font-light">
+              Esta acción no se puede deshacer.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogCancel className="font-normal">Cancelar</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
-              className="bg-red-600 hover:bg-red-700"
+              className="bg-red-600 hover:bg-red-700 font-normal"
             >
               Eliminar
             </AlertDialogAction>

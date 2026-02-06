@@ -77,111 +77,93 @@ export default function DashboardScreen({ onNavigate, user, accessToken }: Dashb
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
+    <div className="min-h-screen bg-white pb-20">
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white px-6 py-8">
-        <div className="flex justify-between items-center mb-6">
+      <div className="px-6 py-8 border-b">
+        <div className="flex justify-between items-start mb-8">
           <div>
-            <p className="text-blue-100 text-sm">Bienvenido de nuevo</p>
-            <h1 className="text-2xl font-bold">{user.name}</h1>
+            <p className="text-gray-500 text-sm font-light mb-1">Hola,</p>
+            <h1 className="text-2xl font-light text-gray-900">{user.name}</h1>
           </div>
           <button
             onClick={() => onNavigate('profile')}
-            className="bg-white/20 hover:bg-white/30 p-2 rounded-full transition"
+            className="text-gray-500 hover:text-gray-900 transition-colors"
           >
-            <UserCircle className="w-8 h-8" />
+            <UserCircle className="w-7 h-7" strokeWidth={1.5} />
           </button>
         </div>
 
         {/* Total Card */}
-        <Card className="bg-white/10 backdrop-blur border-white/20 text-white">
-          <CardContent className="pt-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-blue-100 text-sm mb-1">Total del mes</p>
-                <p className="text-3xl font-bold">
-                  {loading ? '...' : formatCurrency(totalMonth)}
-                </p>
-              </div>
-              <div className="bg-white/20 p-3 rounded-full">
-                <TrendingUp className="w-6 h-6" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="border border-gray-200 rounded-lg p-6">
+          <p className="text-gray-500 text-sm font-light mb-2">Total del mes</p>
+          <p className="text-4xl font-light text-gray-900">
+            {loading ? '...' : formatCurrency(totalMonth)}
+          </p>
+        </div>
       </div>
 
       {/* Content */}
-      <div className="px-6 py-6 space-y-6">
+      <div className="px-6 py-6 space-y-8">
         {/* Quick Actions */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-3">
           <Button
             onClick={() => onNavigate('add-expense')}
-            className="bg-blue-600 hover:bg-blue-700 h-24 flex-col gap-2"
+            className="bg-gray-900 hover:bg-gray-800 h-20 flex-col gap-1.5 font-normal"
           >
-            <Plus className="w-6 h-6" />
-            <span>Agregar Gasto</span>
+            <Plus className="w-5 h-5" strokeWidth={1.5} />
+            <span className="text-sm">Agregar</span>
           </Button>
           
           <Button
             onClick={() => onNavigate('expenses-list')}
             variant="outline"
-            className="h-24 flex-col gap-2 border-2"
+            className="h-20 flex-col gap-1.5 border-gray-200 font-normal"
           >
-            <List className="w-6 h-6" />
-            <span>Ver Todos</span>
+            <List className="w-5 h-5" strokeWidth={1.5} />
+            <span className="text-sm">Ver Todos</span>
           </Button>
         </div>
 
         {/* Recent Expenses */}
         <div>
-          <h2 className="text-xl font-bold text-gray-900 mb-4">Gastos recientes</h2>
+          <h2 className="text-lg font-light text-gray-900 mb-4">Recientes</h2>
           
           {loading ? (
-            <div className="space-y-3">
+            <div className="space-y-2">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="bg-white p-4 rounded-lg border animate-pulse">
-                  <div className="h-4 bg-gray-200 rounded w-1/3 mb-2"></div>
-                  <div className="h-3 bg-gray-200 rounded w-1/4"></div>
+                <div key={i} className="border border-gray-100 p-4 rounded-lg animate-pulse">
+                  <div className="h-4 bg-gray-100 rounded w-1/3 mb-2"></div>
+                  <div className="h-3 bg-gray-100 rounded w-1/4"></div>
                 </div>
               ))}
             </div>
           ) : recentExpenses.length === 0 ? (
-            <Card>
-              <CardContent className="pt-6 text-center py-12">
-                <Calendar className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-                <p className="text-gray-500">No hay gastos registrados</p>
-                <p className="text-sm text-gray-400 mt-1">
-                  Agrega tu primer gasto para comenzar
-                </p>
-              </CardContent>
-            </Card>
+            <div className="border border-gray-100 rounded-lg p-12 text-center">
+              <Calendar className="w-10 h-10 text-gray-300 mx-auto mb-3" strokeWidth={1.5} />
+              <p className="text-gray-400 text-sm font-light">No hay gastos registrados</p>
+            </div>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-2">
               {recentExpenses.map((expense) => (
-                <Card key={expense.id} className="hover:shadow-md transition cursor-pointer">
-                  <CardContent className="pt-6">
-                    <div className="flex justify-between items-start">
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-gray-900 mb-1">
-                          {expense.description}
-                        </h3>
-                        <div className="flex items-center gap-2 text-sm text-gray-500">
-                          <span className={`px-2 py-1 rounded text-xs font-medium ${getCategoryColor(expense.category)}`}>
-                            {expense.category}
-                          </span>
-                          <span>•</span>
-                          <span>{formatDate(expense.date)}</span>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-lg font-bold text-gray-900">
-                          {formatCurrency(expense.amount)}
-                        </p>
+                <div key={expense.id} className="border border-gray-100 rounded-lg p-4 hover:border-gray-200 transition-colors">
+                  <div className="flex justify-between items-start">
+                    <div className="flex-1">
+                      <h3 className="font-normal text-gray-900 mb-1.5 text-sm">
+                        {expense.description}
+                      </h3>
+                      <div className="flex items-center gap-2 text-xs text-gray-400">
+                        <span>{expense.category}</span>
+                        <span>•</span>
+                        <span>{formatDate(expense.date)}</span>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
+                    <div className="text-right">
+                      <p className="text-base font-normal text-gray-900">
+                        {formatCurrency(expense.amount)}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
           )}

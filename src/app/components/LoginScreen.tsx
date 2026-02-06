@@ -57,56 +57,51 @@ export default function LoginScreen({ onNavigate, onLogin }: LoginScreenProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col">
       {/* Header */}
-      <div className="bg-white border-b px-4 py-4">
+      <div className="px-6 py-6">
         <button
           onClick={() => onNavigate('welcome')}
-          className="flex items-center text-gray-600 hover:text-gray-900"
+          className="flex items-center text-gray-500 hover:text-gray-900 transition-colors"
         >
-          <ArrowLeft className="w-5 h-5 mr-2" />
-          Volver
+          <ArrowLeft className="w-5 h-5" strokeWidth={1.5} />
         </button>
       </div>
 
       {/* Content */}
-      <div className="flex-1 flex items-center justify-center px-6 py-12">
-        <div className="w-full max-w-md space-y-8">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold text-gray-900">Iniciar sesión</h2>
-            <p className="mt-2 text-gray-600">
-              Ingresa a tu cuenta para continuar
+      <div className="flex-1 flex items-center justify-center px-6 pb-12">
+        <div className="w-full max-w-sm space-y-8">
+          <div className="space-y-2">
+            <h2 className="text-3xl font-light text-gray-900">Iniciar sesión</h2>
+            <p className="text-gray-500 font-light">
+              Ingresa a tu cuenta
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-lg shadow-sm border">
-            <div className="space-y-2">
-              <Label htmlFor="email">Correo electrónico</Label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-sm font-normal text-gray-700">Correo</Label>
                 <Input
                   id="email"
                   type="email"
                   placeholder="tu@email.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="pl-10"
+                  className="border-gray-200 focus:border-gray-900"
                   disabled={loading}
                 />
               </div>
-            </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="password">Contraseña</Label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <div className="space-y-2">
+                <Label htmlFor="password" className="text-sm font-normal text-gray-700">Contraseña</Label>
                 <Input
                   id="password"
                   type="password"
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="pl-10"
+                  className="border-gray-200 focus:border-gray-900"
                   disabled={loading}
                 />
               </div>
@@ -114,42 +109,20 @@ export default function LoginScreen({ onNavigate, onLogin }: LoginScreenProps) {
 
             <Button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700"
+              className="w-full bg-gray-900 hover:bg-gray-800 py-6 font-normal"
               disabled={loading}
             >
               {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
             </Button>
 
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-white px-2 text-gray-500">O prueba con</span>
-              </div>
-            </div>
-
-            <Button
-              type="button"
-              onClick={() => {
-                setEmail('demo@gastosapp.com');
-                setPassword('demo123456');
-              }}
-              variant="outline"
-              className="w-full border-blue-200 text-blue-600 hover:bg-blue-50"
-              disabled={loading}
-            >
-              Usuario Demo
-            </Button>
-
             <div className="text-center text-sm">
-              <span className="text-gray-600">¿No tienes cuenta? </span>
+              <span className="text-gray-500">¿No tienes cuenta? </span>
               <button
                 type="button"
                 onClick={() => onNavigate('register')}
-                className="text-blue-600 hover:text-blue-700 font-semibold"
+                className="text-gray-900 hover:underline font-normal"
               >
-                Regístrate aquí
+                Regístrate
               </button>
             </div>
           </form>

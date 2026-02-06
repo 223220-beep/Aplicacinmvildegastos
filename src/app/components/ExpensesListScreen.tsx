@@ -107,41 +107,40 @@ export default function ExpensesListScreen({
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col">
       {/* Header */}
-      <div className="bg-white border-b px-4 py-4 sticky top-0 z-10">
-        <div className="flex items-center justify-between mb-4">
+      <div className="border-b px-6 py-6 sticky top-0 z-10 bg-white">
+        <div className="flex items-center mb-6">
           <button
             onClick={() => onNavigate('dashboard')}
-            className="flex items-center text-gray-600 hover:text-gray-900"
+            className="text-gray-500 hover:text-gray-900 transition-colors"
           >
-            <ArrowLeft className="w-5 h-5 mr-2" />
-            Volver
+            <ArrowLeft className="w-5 h-5" strokeWidth={1.5} />
           </button>
-          <h1 className="text-xl font-bold text-gray-900">Todos los gastos</h1>
-          <div className="w-20"></div>
+          <h1 className="flex-1 text-center text-lg font-light text-gray-900">Gastos</h1>
+          <div className="w-5"></div>
         </div>
 
         {/* Search Bar */}
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" strokeWidth={1.5} />
           <Input
             type="text"
-            placeholder="Buscar gastos..."
+            placeholder="Buscar..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10"
+            className="pl-10 border-gray-200 focus:border-gray-900"
           />
         </div>
       </div>
 
       {/* Total Summary */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white px-6 py-6">
-        <p className="text-blue-100 text-sm">Total de gastos</p>
-        <p className="text-3xl font-bold mt-1">
+      <div className="border-b px-6 py-6">
+        <p className="text-gray-500 text-sm font-light mb-1">Total</p>
+        <p className="text-3xl font-light text-gray-900">
           {formatCurrency(getTotalAmount())}
         </p>
-        <p className="text-blue-100 text-sm mt-2">
+        <p className="text-gray-400 text-xs mt-2">
           {filteredExpenses.length} {filteredExpenses.length === 1 ? 'gasto' : 'gastos'}
         </p>
       </div>
@@ -149,58 +148,47 @@ export default function ExpensesListScreen({
       {/* Expenses List */}
       <div className="flex-1 px-6 py-6">
         {loading ? (
-          <div className="space-y-3">
+          <div className="space-y-2">
             {[1, 2, 3, 4, 5].map((i) => (
-              <div key={i} className="bg-white p-4 rounded-lg border animate-pulse">
-                <div className="h-4 bg-gray-200 rounded w-2/3 mb-2"></div>
-                <div className="h-3 bg-gray-200 rounded w-1/3"></div>
+              <div key={i} className="border border-gray-100 p-4 rounded-lg animate-pulse">
+                <div className="h-4 bg-gray-100 rounded w-2/3 mb-2"></div>
+                <div className="h-3 bg-gray-100 rounded w-1/3"></div>
               </div>
             ))}
           </div>
         ) : filteredExpenses.length === 0 ? (
-          <Card>
-            <CardContent className="pt-6 text-center py-12">
-              <Filter className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-              <p className="text-gray-500">
-                {searchQuery ? 'No se encontraron gastos' : 'No hay gastos registrados'}
-              </p>
-              <p className="text-sm text-gray-400 mt-1">
-                {searchQuery
-                  ? 'Intenta con otra búsqueda'
-                  : 'Agrega tu primer gasto para comenzar'}
-              </p>
-            </CardContent>
-          </Card>
+          <div className="border border-gray-100 rounded-lg p-12 text-center">
+            <Filter className="w-10 h-10 text-gray-300 mx-auto mb-3" strokeWidth={1.5} />
+            <p className="text-gray-400 text-sm font-light">
+              {searchQuery ? 'No se encontraron gastos' : 'No hay gastos registrados'}
+            </p>
+          </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-2">
             {filteredExpenses.map((expense) => (
-              <Card
+              <div
                 key={expense.id}
-                className="hover:shadow-md transition cursor-pointer"
+                className="border border-gray-100 rounded-lg p-4 hover:border-gray-200 transition-colors cursor-pointer"
                 onClick={() => onExpenseSelect(expense)}
               >
-                <CardContent className="pt-6">
-                  <div className="flex justify-between items-start">
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-gray-900 mb-2">
-                        {expense.description}
-                      </h3>
-                      <div className="flex items-center gap-2 text-sm text-gray-500">
-                        <span className={`px-2 py-1 rounded text-xs font-medium ${getCategoryColor(expense.category)}`}>
-                          {expense.category}
-                        </span>
-                        <span>•</span>
-                        <span>{formatDate(expense.date)}</span>
-                      </div>
-                    </div>
-                    <div className="text-right ml-4">
-                      <p className="text-lg font-bold text-gray-900">
-                        {formatCurrency(expense.amount)}
-                      </p>
+                <div className="flex justify-between items-start">
+                  <div className="flex-1">
+                    <h3 className="font-normal text-gray-900 mb-1.5 text-sm">
+                      {expense.description}
+                    </h3>
+                    <div className="flex items-center gap-2 text-xs text-gray-400">
+                      <span>{expense.category}</span>
+                      <span>•</span>
+                      <span>{formatDate(expense.date)}</span>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
+                  <div className="text-right ml-4">
+                    <p className="text-base font-normal text-gray-900">
+                      {formatCurrency(expense.amount)}
+                    </p>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         )}
@@ -210,9 +198,9 @@ export default function ExpensesListScreen({
       <div className="fixed bottom-6 right-6">
         <Button
           onClick={() => onNavigate('add-expense')}
-          className="bg-blue-600 hover:bg-blue-700 rounded-full w-14 h-14 shadow-lg"
+          className="bg-gray-900 hover:bg-gray-800 rounded-full w-14 h-14 shadow-lg"
         >
-          <span className="text-2xl">+</span>
+          <span className="text-2xl font-light">+</span>
         </Button>
       </div>
     </div>

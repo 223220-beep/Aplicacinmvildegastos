@@ -13,98 +13,62 @@ interface ProfileScreenProps {
 
 export default function ProfileScreen({ onNavigate, user, onLogout }: ProfileScreenProps) {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col">
       {/* Header */}
-      <div className="bg-white border-b px-4 py-4">
-        <div className="flex items-center justify-between">
+      <div className="border-b px-6 py-6">
+        <div className="flex items-center">
           <button
             onClick={() => onNavigate('dashboard')}
-            className="flex items-center text-gray-600 hover:text-gray-900"
+            className="text-gray-500 hover:text-gray-900 transition-colors"
           >
-            <ArrowLeft className="w-5 h-5 mr-2" />
-            Volver
+            <ArrowLeft className="w-5 h-5" strokeWidth={1.5} />
           </button>
-          <h1 className="text-xl font-bold text-gray-900">Perfil</h1>
-          <div className="w-20"></div>
+          <h1 className="flex-1 text-center text-lg font-light text-gray-900">Perfil</h1>
+          <div className="w-5"></div>
         </div>
       </div>
 
       {/* Profile Content */}
-      <div className="flex-1 px-6 py-6 space-y-6">
+      <div className="flex-1 px-6 py-8 space-y-8">
         {/* User Avatar Section */}
-        <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-8 rounded-lg shadow-sm">
-          <div className="flex flex-col items-center text-center">
-            <div className="bg-white/20 p-6 rounded-full mb-4">
-              <User className="w-16 h-16" />
-            </div>
-            <h2 className="text-2xl font-bold mb-1">{user.name}</h2>
-            <p className="text-blue-100">{user.email}</p>
+        <div className="flex flex-col items-center text-center max-w-sm mx-auto">
+          <div className="border border-gray-200 p-6 rounded-full mb-4">
+            <User className="w-12 h-12 text-gray-400" strokeWidth={1.5} />
           </div>
+          <h2 className="text-xl font-light text-gray-900 mb-1">{user.name}</h2>
+          <p className="text-gray-500 text-sm font-light">{user.email}</p>
         </div>
 
         {/* User Info Card */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Información de la cuenta</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center gap-3 pb-4 border-b">
-              <div className="bg-blue-100 p-2 rounded-lg">
-                <User className="w-5 h-5 text-blue-600" />
-              </div>
-              <div className="flex-1">
-                <p className="text-sm text-gray-500">Nombre</p>
-                <p className="font-semibold text-gray-900">{user.name}</p>
-              </div>
+        <div className="max-w-sm mx-auto space-y-6">
+          <div className="space-y-4">
+            <div className="border-b border-gray-100 pb-4">
+              <p className="text-xs text-gray-400 mb-1 uppercase tracking-wide">Nombre</p>
+              <p className="font-normal text-gray-900">{user.name}</p>
             </div>
 
-            <div className="flex items-center gap-3 pb-4 border-b">
-              <div className="bg-green-100 p-2 rounded-lg">
-                <Mail className="w-5 h-5 text-green-600" />
-              </div>
-              <div className="flex-1">
-                <p className="text-sm text-gray-500">Correo electrónico</p>
-                <p className="font-semibold text-gray-900">{user.email}</p>
-              </div>
+            <div className="border-b border-gray-100 pb-4">
+              <p className="text-xs text-gray-400 mb-1 uppercase tracking-wide">Correo</p>
+              <p className="font-normal text-gray-900">{user.email}</p>
             </div>
 
-            <div className="flex items-center gap-3">
-              <div className="bg-purple-100 p-2 rounded-lg">
-                <Shield className="w-5 h-5 text-purple-600" />
-              </div>
-              <div className="flex-1">
-                <p className="text-sm text-gray-500">ID de usuario</p>
-                <p className="font-mono text-xs text-gray-600">{user.id}</p>
-              </div>
+            <div className="pb-4">
+              <p className="text-xs text-gray-400 mb-1 uppercase tracking-wide">ID</p>
+              <p className="font-mono text-xs text-gray-500">{user.id}</p>
             </div>
-          </CardContent>
-        </Card>
-
-        {/* App Info */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Acerca de la aplicación</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-gray-600 mb-3">
-              GastosApp te ayuda a llevar un control simple y efectivo de tus gastos personales diarios.
-            </p>
-            <div className="text-xs text-gray-500 space-y-1">
-              <p>Versión: 1.0.0</p>
-              <p>Desarrollado para control de gastos personales</p>
-            </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Logout Button */}
-        <Button
-          onClick={onLogout}
-          variant="outline"
-          className="w-full border-red-200 text-red-600 hover:bg-red-50 py-6 text-lg"
-        >
-          <LogOut className="w-5 h-5 mr-2" />
-          Cerrar sesión
-        </Button>
+        <div className="max-w-sm mx-auto pt-4">
+          <Button
+            onClick={onLogout}
+            variant="outline"
+            className="w-full border-gray-200 text-red-600 hover:bg-red-50 hover:border-red-200 py-6 font-normal"
+          >
+            Cerrar sesión
+          </Button>
+        </div>
       </div>
     </div>
   );
